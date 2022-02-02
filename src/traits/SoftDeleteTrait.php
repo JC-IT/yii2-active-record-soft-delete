@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JCIT\softDelete\traits;
 
+use JCIT\softDelete\interfaces\SoftDeleteActiveQueryInterface;
 use JCIT\softDelete\queries\SoftDeleteActiveQuery;
 use yii\db\StaleObjectException;
 
@@ -55,7 +56,7 @@ trait SoftDeleteTrait
         return $result;
     }
 
-    public static function find(): SoftDeleteActiveQuery
+    public static function find(): SoftDeleteActiveQueryInterface
     {
         return \Yii::createObject(SoftDeleteActiveQuery::class, [get_called_class()]);
     }
