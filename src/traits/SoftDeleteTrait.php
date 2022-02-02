@@ -17,19 +17,6 @@ trait SoftDeleteTrait
 
     abstract public function beforeDelete();
 
-    /**
-     * This function must return the attribute that is being set when the model is deleted.
-     */
-    public function deletedAtAttribute(): string
-    {
-        return 'deleted_at';
-    }
-
-    public function deletedAtTableColumn(): string
-    {
-        return static::tableName() . ".[[{$this->deletedAtAttribute()}]]";
-    }
-
     protected function deleteInternal(): int|false
     {
         if (!$this->beforeDelete()) {
@@ -45,7 +32,7 @@ trait SoftDeleteTrait
         }
 
         //We do nothing, it should be handled by the TimestampBehavior
-        $result = $this->updateAttributes([$this->deletedAtAttribute()]);
+        $result = $this->updateAttributes(array_filter([$this->deletedAtAttribute(), $this->deletedByAttribute()]));
 
         if ($lock !== null && !$result) {
             throw new StaleObjectException('The object being deleted is outdated.');
@@ -54,6 +41,24 @@ trait SoftDeleteTrait
         $this->afterDelete();
 
         return $result;
+    }
+
+    /**
+     * This function must return the attribute that is being set when the model is deleted.
+     */
+    public function deletedAtAttribute(): string
+    {
+        return 'deleted_at';
+    }
+
+    public function deletedAtTableColumn(): string
+    {
+        return static::tableName() . ".[[{$this->deletedAtAttribute()}]]";
+    }
+
+    public function deletedByAttribute(): ?string
+    {
+        return null;
     }
 
     public static function find(): SoftDeleteActiveQueryInterface
