@@ -1,5 +1,5 @@
 {
-    "name": "jc-it/yii2-twig",
+    "name": "jc-it/yii2-active-record-soft-delete",
     "description": "Yii2 Active Record - Soft delete",
     "type": "library",
     "license": "MIT",
