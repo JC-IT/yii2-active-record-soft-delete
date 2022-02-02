@@ -30,7 +30,7 @@ trait SoftDeleteTrait
         return static::tableName() . ".[[{$this->deletedAtAttribute()}]]";
     }
 
-    protected function deleteInternal(): bool
+    protected function deleteInternal(): int|false
     {
         if (!$this->beforeDelete()) {
             return false;
