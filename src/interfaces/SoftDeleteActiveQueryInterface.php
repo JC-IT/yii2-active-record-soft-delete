@@ -8,6 +8,6 @@ use yii\db\ActiveQueryInterface;
 
 interface SoftDeleteActiveQueryInterface extends ActiveQueryInterface
 {
-    public function deleted(string $alias = null): static;
-    public function notDeleted(string $alias = null): static;
+    public function deleted(string|null $alias = null): static;
+    public function notDeleted(string|null $alias = null): static;
 }
